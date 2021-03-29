@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int map[1024][1024] = { 0 };
+int N;
+
+int pulling(int x, int y) {
+	vector <int> mini;
+
+	for (int i = x; i < x + 2; i++)
+		for (int j = y; j < y + 2; j++)
+			mini.push_back(map[i][j]);
+
+	sort(mini.begin(), mini.end());
+
+	return mini[2];
+}
+
+int main(){
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j <	N; j++) {
+			cin >> map[i][j];
+		}
+	}
+
+	while (N > 1)
+	{
+		for (int i = 0; i < N; i += 2)
+			for (int j = 0; j < N; j += 2)
+				map[i / 2][j / 2] = pulling(i, j); //가로 세로 2칸씩 움직이며 p갱신
+		N /= 2;
+	}
+	cout << map[0][0] << endl;
+}
